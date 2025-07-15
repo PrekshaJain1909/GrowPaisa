@@ -1,0 +1,89 @@
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1050;
+}
+
+/* Sidebar-style modal content */
+.modal-content {
+  background: #ffffff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 65%;
+  height: 85%;
+  margin-top: 70px;
+  margin-right: 20px;
+  border-radius: 12px;
+  padding: 2rem;
+  overflow-y: auto;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hamburger button */
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #0f3d2e;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Explore Products Title */
+.modal-content h4 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f3d2e;
+  margin-bottom: 1.5rem;
+}
+
+/* Product items */
+.product-item img {
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+.product-item h6 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+}
+.product-item p {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+/* Utility/Update/Education titles */
+.modal-content h6 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f3d2e;
+  margin-bottom: 1rem;
+}
+
+/* Li*

@@ -1,0 +1,83 @@
+.watchlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem auto;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.watchlist-table th,
+.watchlist-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.symbol-cell {
+  font-weight: 600;
+  color: #333;
+}
+
+.red {
+  color: #e53935;
+}
+
+.green {
+  color: #43a047;
+}
+
+.action-cell {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 12px 0;
+}
+
+.action-btn {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  margin: 0 6px;
+  padding: 8px 16px;
+  min-width: 80px; /* Ensures all buttons are equal width */
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.action-btn:hover {
+  background-color: #d4d4d4;
+  transform: translateY(-1px);
+}
+
+.buy {
+  background-color: #4caf50;
+  color: white;
+}
+
+.sell {
+  background-color: #f44336;
+  color: white;
+}
+
+.info {
+  background-color: #2196f3;
+  color: white;
+}
+.delete {
+  background-color: #3d3b35;
+  color: white;
+}
+
+.alert {
+  background-color: #ff9800;
+  color: white;
+}
+.table-primary {
+  transition: background-color 0.3s ease-in-out;
+}
