@@ -9,6 +9,7 @@ import Bids from "./pages/Bids";
 import Wallet from "./pages/Wallet";
 import Overview from "./pages/Overview";
 import GrowwLogin from "./components/signUp";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
