@@ -33,7 +33,7 @@ const SignInForm = ({ onClose }) => {
       setErrors(errs);
     } else {
       try {
-        const res = await axios.post("http://localhost:5000/api/signin", formData);
+        const res = await axios.post("http://localhost:5000/api/auth/signin", formData);
         console.log("Submitting data to backend:", {
   email: formData.email,
   password: formData.password,

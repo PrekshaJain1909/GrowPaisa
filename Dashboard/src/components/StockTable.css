@@ -81,3 +81,30 @@
 .table-primary {
   transition: background-color 0.3s ease-in-out;
 }
+/* StockTable.css */
+
+.stock-table-container {
+  padding: 20px;
+}
+
+.growpaisa-buy-btn {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.growpaisa-buy-btn:hover {
+  background-color: #218838;
+}
+
+.modal-header-custom {
+  background-color: #e6f4ea;
+}
+
+.modal-body-custom {
+  background-color: #f8fdf8;
+}

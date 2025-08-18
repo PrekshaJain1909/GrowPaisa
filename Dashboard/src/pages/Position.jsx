@@ -1,8 +1,125 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Positions() {
+  const [positions, setPositions] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    symbol: "",
+    quantity: "",
+    buyPrice: "",
+    currentPrice: "",
+    dayChangePercent: "",
+  });
+  const [editingId, setEditingId] = useState(null);
+
+  useEffect(() => {
+    fetchPositions();
+  }, []);
+
+  const fetchPositions = () => {
+    setLoading(true);
+    fetch("http://localhost:5000/api/positions")
+      .then((res) => res.json())
+      .then((data) => {
+        setPositions(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setPositions([]);
+        setLoading(false);
+      });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((fd) => ({ ...fd, [name]: value }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      symbol: "",
+      quantity: "",
+      buyPrice: "",
+      currentPrice: "",
+      dayChangePercent: "",
+    });
+    setEditingId(null);
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    // Validate minimal
+    if (!formData.symbol || !formData.quantity) {
+      alert("Symbol and quantity are required");
+      return;
+    }
+
+    const payload = {
+      symbol: formData.symbol.toUpperCase(),
+      quantity: Number(formData.quantity),
+      buyPrice: Number(formData.buyPrice),
+      currentPrice: Number(formData.currentPrice),
+      dayChangePercent: Number(formData.dayChangePercent),
+    };
+
+    try {
+      if (editingId) {
+        // Update existing
+        await fetch(`http://localhost:5000/api/positions/${editingId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        // Add new
+        await fetch("http://localhost:5000/api/positions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      }
+      fetchPositions();
+      resetForm();
+    } catch (err) {
+      alert("Failed to save position");
+    }
+  };
+
+  const handleEdit = (pos) => {
+    setEditingId(pos.id);
+    setFormData({
+      symbol: pos.symbol,
+      quantity: pos.quantity,
+      buyPrice: pos.buyPrice,
+      currentPrice: pos.currentPrice,
+      dayChangePercent: pos.dayChangePercent,
+    });
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this position?")) return;
+
+    try {
+      await fetch(`http://localhost:5000/api/positions/${id}`, {
+        method: "DELETE",
+      });
+      fetchPositions();
+    } catch {
+      alert("Failed to delete position");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="container py-4" style={{ textAlign: "center" }}>
+        <p>Loading positions...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="container py-4">
+    <div className="container py-4" style={{ maxWidth: 900 }}>
       {/* GrowPaisa Alert Banner */}
       <div
         className="mb-4 px-3 py-2 rounded"
@@ -23,74 +140,154 @@ export default function Positions() {
         .
       </div>
 
-      {/* Empty Positions Message */}
-      <div
-        className="d-flex flex-column align-items-center justify-content-center"
-        style={{ minHeight: "60vh", textAlign: "center" }}
-      >
-        {/* Icon */}
-        <div className="mb-3" style={{ opacity: 0.15 }}>
-          <svg
-            width="64"
-            height="64"
-            fill="currentColor"
-            viewBox="0 0 16 16"
+      {/* Add/Edit Form */}
+      <form onSubmit={submitForm} style={{ marginBottom: 30 }}>
+        <h5>{editingId ? "Edit Position" : "Add New Position"}</h5>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+          <input
+            name="symbol"
+            placeholder="Symbol"
+            value={formData.symbol}
+            onChange={handleInputChange}
+            required
+            style={{ flex: "1 1 100px", padding: 8 }}
+          />
+          <input
+            name="quantity"
+            type="number"
+            placeholder="Quantity"
+            value={formData.quantity}
+            onChange={handleInputChange}
+            required
+            style={{ flex: "1 1 100px", padding: 8 }}
+          />
+          <input
+            name="buyPrice"
+            type="number"
+            step="0.01"
+            placeholder="Buy Price"
+            value={formData.buyPrice}
+            onChange={handleInputChange}
+            style={{ flex: "1 1 120px", padding: 8 }}
+          />
+          <input
+            name="currentPrice"
+            type="number"
+            step="0.01"
+            placeholder="Current Price"
+            value={formData.currentPrice}
+            onChange={handleInputChange}
+            style={{ flex: "1 1 120px", padding: 8 }}
+          />
+          <input
+            name="dayChangePercent"
+            type="number"
+            step="0.01"
+            placeholder="Day Change %"
+            value={formData.dayChangePercent}
+            onChange={handleInputChange}
+            style={{ flex: "1 1 120px", padding: 8 }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: "8px 20px",
+              backgroundColor: "#198754",
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              cursor: "pointer",
+              fontWeight: 500,
+            }}
           >
-            <path d="M8 1a2 2 0 0 1 2 2c0 .628-.297 1.177-.75 1.516V6h1a.5.5 0 1 1 0 1h-1v2.5a.5.5 0 0 1-1 0V7h-1a.5.5 0 0 1 0-1h1V4.516A1.992 1.992 0 0 1 6 3a2 2 0 0 1 2-2zm0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm.5 11.938V10.5a.5.5 0 0 0-1 0v2.438A6.978 6.978 0 0 1 1 9.5a.5.5 0 0 0-1 0 7.978 7.978 0 0 0 7 7.938V15.5a.5.5 0 0 1 1 0v1.938A7.978 7.978 0 0 0 16 9.5a.5.5 0 0 0-1 0 6.978 6.978 0 0 1-6.5 5.438z" />
-          </svg>
+            {editingId ? "Update" : "Add"}
+          </button>
+          {editingId && (
+            <button
+              type="button"
+              onClick={resetForm}
+              style={{
+                padding: "8px 20px",
+                backgroundColor: "#dc3545",
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontWeight: 500,
+              }}
+            >
+              Cancel
+            </button>
+          )}
         </div>
+      </form>
 
-        {/* Message */}
-        <h4
-          style={{
-            color: "#1a1a1a",
-            fontWeight: 600,
-            fontSize: "1.15rem",
-          }}
+      {/* Positions Table or Empty State */}
+      {!positions || positions.length === 0 ? (
+        <div
+          className="d-flex flex-column align-items-center justify-content-center"
+          style={{ minHeight: "40vh", textAlign: "center" }}
         >
-          No active positions
-        </h4>
-        <p
-          style={{
-            color: "#6c757d",
-            fontSize: "0.85rem",
-            maxWidth: 440,
-          }}
-        >
-          You haven’t placed any trades yet. Let’s begin your investment journey with GrowPaisa.
-        </p>
-
-        {/* CTA Button */}
-        <button
-          className="mb-2"
-          style={{
-            padding: "9px 20px",
-            backgroundColor: "#198754",
-            color: "#fff",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: 500,
-            fontSize: "0.85rem",
-            marginTop: "12px",
-            cursor: "pointer",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          }}
-        >
-          Start Investing
-        </button>
-
-        {/* Link */}
-        <a
-          href="#"
-          style={{
-            color: "#198754",
-            textDecoration: "underline",
-            fontSize: "0.8rem",
-          }}
-        >
-          Go to portfolio
-        </a>
-      </div>
+          <p>No active positions found.</p>
+        </div>
+      ) : (
+        <table className="table table-striped" style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Quantity</th>
+              <th>Buy Price</th>
+              <th>Current Price</th>
+              <th>Unrealized P/L</th>
+              <th>Day Change (%)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {positions.map((pos) => {
+              const unrealizedPL = (pos.currentPrice - pos.buyPrice) * pos.quantity;
+              return (
+                <tr key={pos.id}>
+                  <td>{pos.symbol}</td>
+                  <td>{pos.quantity}</td>
+                  <td>${pos.buyPrice.toFixed(2)}</td>
+                  <td>${pos.currentPrice.toFixed(2)}</td>
+                  <td style={{ color: unrealizedPL >= 0 ? "green" : "red" }}>
+                    ${unrealizedPL.toFixed(2)}
+                  </td>
+                  <td style={{ color: pos.dayChangePercent >= 0 ? "green" : "red" }}>
+                    {pos.dayChangePercent.toFixed(2)}%
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleEdit(pos)}
+                      style={{
+                        marginRight: 8,
+                        padding: "4px 8px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(pos.id)}
+                      style={{
+                        padding: "4px 8px",
+                        backgroundColor: "#dc3545",
+                        color: "#fff",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

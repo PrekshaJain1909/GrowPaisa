@@ -1,14 +1,23 @@
 const mongoose = require("mongoose");
-const portfolioHoldingSchema = new mongoose.Schema({
-     name: { type: String, required: true },
-    qty: Number,
-    avgCost: Number,
-    ltp: Number,
-    invested: Number,
-    curVal: Number,
-    pnl: Number,
-    netChg: String,
-    dayChg: String,
+
+const holdingSchema = new mongoose.Schema({
+  name: String,
+  qty: Number,
+  avgCost: Number,
+  ltp: Number
 });
-const PortfolioHolding = mongoose.model('PortfolioHolding', portfolioHoldingSchema);
-module.exports=PortfolioHolding;
+
+holdingSchema.virtual("invested").get(function () {
+  return this.qty * this.avgCost;
+});
+holdingSchema.virtual("curVal").get(function () {
+  return this.qty * this.ltp;
+});
+holdingSchema.virtual("pnl").get(function () {
+  return this.curVal - this.invested;
+});
+
+holdingSchema.set("toJSON", { virtuals: true });
+holdingSchema.set("toObject", { virtuals: true });
+
+module.exports = mongoose.model("Holding", holdingSchema);

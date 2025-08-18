@@ -1,9 +1,76 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function FundsDashboard() {
+  const [wallet, setWallet] = useState({
+    availableCash: 0,
+    fundsAdded: 0,
+    fundsWithdrawn: 0,
+    transactions: [],
+  });
+
+  // API URLs without portfolioHoldings
+  const apiEndpoints = {
+    bids: "http://localhost:5000/api/bids",
+    holdings: "http://localhost:5000/api/holdings",
+    orders: "http://localhost:5000/api/orders",
+    positions: "http://localhost:5000/api/positions",
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [bidsRes, holdingsRes, ordersRes, positionsRes] = await Promise.all([
+          fetch(apiEndpoints.bids),
+          fetch(apiEndpoints.holdings),
+          fetch(apiEndpoints.orders),
+          fetch(apiEndpoints.positions),
+        ]);
+
+        const [bids, holdings, orders, positions] = await Promise.all([
+          bidsRes.json(),
+          holdingsRes.json(),
+          ordersRes.json(),
+          positionsRes.json(),
+        ]);
+
+        // Calculate available cash (sum cash from holdings & bids)
+        const cashFromHoldings = holdings.reduce((acc, h) => acc + (h.cash || 0), 0);
+        const cashFromBids = bids.reduce((acc, b) => acc + (b.bidPrice * b.quantity || 0), 0);
+
+        // Funds added and withdrawn from orders (example)
+        let fundsAdded = 0;
+        let fundsWithdrawn = 0;
+        orders.forEach((order) => {
+          if (order.type === "deposit") fundsAdded += order.amount;
+          if (order.type === "withdrawal") fundsWithdrawn += order.amount;
+        });
+
+        // Transactions from orders
+        const transactions = orders.map((order) => ({
+          id: order._id,
+          type: order.type,
+          amount: order.amount,
+          date: order.date,
+          status: order.status,
+        }));
+
+        setWallet({
+          availableCash: cashFromHoldings - cashFromBids, // subtract bids amount as pending bids hold cash
+          fundsAdded,
+          fundsWithdrawn,
+          transactions,
+        });
+      } catch (error) {
+        console.error("Error fetching wallet data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="container py-3" style={{ fontSize: "0.85rem" }}>
-      {/* GrowPaisa Banner */}
+      {/* Banner */}
       <div
         className="alert py-2 mb-3"
         role="alert"
@@ -42,119 +109,59 @@ export default function FundsDashboard() {
         </div>
       </div>
 
-      {/* Funds Cards */}
-      <div className="row">
-        {/* Equity Card */}
-        <div className="col-md-6 mb-4">
-          <div className="card border-0 shadow-sm">
-            <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <h5 className="mb-0" style={{ fontWeight: 600, fontSize: "1rem", color: "#1a1a1a" }}>
-                  📈 Equity
-                </h5>
-                <div>
-                  <a href="#" className="me-3 text-success small fw-semibold">
-                    View statement
-                  </a>
-                  <a href="#" className="text-success small fw-semibold">
-                    Help
-                  </a>
-                </div>
-              </div>
-
-              <hr className="my-2" />
-
-              {/* Balances */}
-              <div className="mb-2 d-flex justify-content-between">
-                <span>Available margin</span>
-                <span className="fw-bold text-danger">-87.50</span>
-              </div>
-              <div className="mb-2 d-flex justify-content-between">
-                <span>Used margin</span>
-                <span className="fw-bold">0.00</span>
-              </div>
-              <div className="mb-3 d-flex justify-content-between">
-                <span>Available cash</span>
-                <span className="fw-bold text-danger">-87.50</span>
-              </div>
-
-              <hr className="my-2" />
-
-              {/* Breakdown */}
-              {[
-                ["Opening balance", "-87.50"],
-                ["Payin", "0.00"],
-                ["Payout", "0.00"],
-                ["SPAN", "0.00"],
-                ["Delivery margin", "0.00"],
-                ["Exposure", "0.00"],
-                ["Options premium", "0.00"],
-                ["Collateral (Liquid funds)", "0.00"],
-                ["Collateral (Equity)", "0.00"],
-                ["Total collateral", "0.00"],
-              ].map(([label, value], i) => (
-                <div className="d-flex justify-content-between" key={i}>
-                  <span>{label}</span>
-                  <span>{value}</span>
-                </div>
-              ))}
-            </div>
+      {/* Wallet Summary Card */}
+      <div className="card border-0 shadow-sm mb-4">
+        <div className="card-body">
+          <h5 className="mb-3" style={{ fontWeight: 600, fontSize: "1rem", color: "#1a1a1a" }}>
+            💰 Wallet Summary
+          </h5>
+          <div className="d-flex justify-content-between mb-2">
+            <span>Available Cash</span>
+            <span className="fw-bold">₹{wallet.availableCash.toFixed(2)}</span>
           </div>
-        </div>
-
-        {/* Commodity Card */}
-        <div className="col-md-6 mb-4">
-          <div className="card border-0 shadow-sm">
-            <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <h5 className="mb-0" style={{ fontWeight: 600, fontSize: "1rem", color: "#1a1a1a" }}>
-                  🌾 Commodity
-                </h5>
-                <div>
-                  <a href="#" className="me-3 text-success small fw-semibold">
-                    View statement
-                  </a>
-                  <a href="#" className="text-success small fw-semibold">
-                    Help
-                  </a>
-                </div>
-              </div>
-
-              <hr className="my-2" />
-
-              {/* Balances */}
-              <div className="mb-2 d-flex justify-content-between">
-                <span>Available margin</span>
-                <span className="fw-bold">0.00</span>
-              </div>
-              <div className="mb-2 d-flex justify-content-between">
-                <span>Used margin</span>
-                <span className="fw-bold">0.00</span>
-              </div>
-              <div className="mb-3 d-flex justify-content-between">
-                <span>Available cash</span>
-                <span className="fw-bold">0.00</span>
-              </div>
-
-              <hr className="my-2" />
-
-              {/* Breakdown */}
-              {[
-                ["Opening balance", "0.00"],
-                ["Payin", "0.00"],
-                ["Payout", "0.00"],
-                ["SPAN", "0.00"],
-                ["Delivery margin", "0.00"],
-                ["Exposure", "0.00"],
-                ["Options premium", "0.00"],
-              ].map(([label, value], i) => (
-                <div className="d-flex justify-content-between" key={i}>
-                  <span>{label}</span>
-                  <span>{value}</span>
-                </div>
-              ))}
-            </div>
+          <div className="d-flex justify-content-between mb-2">
+            <span>Funds Added</span>
+            <span className="fw-bold text-success">+₹{wallet.fundsAdded.toFixed(2)}</span>
           </div>
+          <div className="d-flex justify-content-between mb-3">
+            <span>Funds Withdrawn</span>
+            <span className="fw-bold text-danger">-₹{wallet.fundsWithdrawn.toFixed(2)}</span>
+          </div>
+
+          <hr />
+
+          <h6 className="mb-3" style={{ fontWeight: 600 }}>
+            Transaction History
+          </h6>
+          {wallet.transactions.length === 0 ? (
+            <p style={{ color: "#6c757d", fontSize: "0.85rem" }}>
+              No transactions yet.
+            </p>
+          ) : (
+            <ul className="list-group" style={{ fontSize: "0.8rem" }}>
+              {wallet.transactions.map((tx) => (
+                <li
+                  key={tx.id}
+                  className={`list-group-item d-flex justify-content-between align-items-center ${
+                    tx.type === "deposit" ? "list-group-item-success" : tx.type === "withdrawal" ? "list-group-item-danger" : ""
+                  }`}
+                >
+                  <div>
+                    <strong>{tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}</strong> - ₹{tx.amount.toFixed(2)}
+                    <br />
+                    <small className="text-muted">{new Date(tx.date).toLocaleDateString()}</small>
+                  </div>
+                  <span
+                    className={`badge rounded-pill ${
+                      tx.status === "completed" ? "bg-success" : "bg-warning text-dark"
+                    }`}
+                  >
+                    {tx.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
