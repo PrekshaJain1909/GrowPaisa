@@ -40,7 +40,7 @@ const SignInForm = ({ onClose }) => {
 });
 
         if (res.data.success) {
-  window.location.href = "https://growpaisa.onrender.com"; // Or the deployed dashboard link
+  window.location.href = "http://localhost:5174"; // Or the deployed dashboard link
 
 
         } else {
