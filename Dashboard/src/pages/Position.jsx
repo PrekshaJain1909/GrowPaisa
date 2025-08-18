@@ -18,7 +18,7 @@ export default function Positions() {
 
   const fetchPositions = () => {
     setLoading(true);
-    fetch("http://localhost:5000/api/positions")
+    fetch("https://growpaisa.onrender.com/api/positions")
       .then((res) => res.json())
       .then((data) => {
         setPositions(data);
@@ -66,14 +66,14 @@ export default function Positions() {
     try {
       if (editingId) {
         // Update existing
-        await fetch(`http://localhost:5000/api/positions/${editingId}`, {
+        await fetch(`https://growpaisa.onrender.com/api/positions/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       } else {
         // Add new
-        await fetch("http://localhost:5000/api/positions", {
+        await fetch("https://growpaisa.onrender.com/api/positions", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -101,7 +101,7 @@ export default function Positions() {
     if (!window.confirm("Are you sure you want to delete this position?")) return;
 
     try {
-      await fetch(`http://localhost:5000/api/positions/${id}`, {
+      await fetch(`https://growpaisa.onrender.com/api/positions/${id}`, {
         method: "DELETE",
       });
       fetchPositions();

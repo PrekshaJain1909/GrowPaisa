@@ -8,7 +8,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token"); // JWT from login
-        const res = await fetch("http://localhost:5000/orders", {
+        const res = await fetch("https://growpaisa.onrender.com/orders", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

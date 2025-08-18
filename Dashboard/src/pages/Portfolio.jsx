@@ -9,7 +9,7 @@ export default function Portfolio() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/portfolio");
+      const res = await axios.get("https://growpaisa.onrender.com/api/portfolio");
       const data = res.data;
       setHoldings(data);
 
@@ -35,9 +35,9 @@ export default function Portfolio() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editingId) {
-      await axios.put(`http://localhost:5000/api/portfolio/${editingId}`, form);
+      await axios.put(`https://growpaisa.onrender.com/api/portfolio/${editingId}`, form);
     } else {
-      await axios.post("http://localhost:5000/api/portfolio", form);
+      await axios.post("https://growpaisa.onrender.com/api/portfolio", form);
     }
     setForm({ name: "", qty: "", avgCost: "", ltp: "" });
     setEditingId(null);
@@ -50,7 +50,7 @@ export default function Portfolio() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/portfolio/${id}`);
+    await axios.delete(`https://growpaisa.onrender.com/api/portfolio/${id}`);
     fetchData();
   };
 

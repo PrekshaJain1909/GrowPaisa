@@ -12,9 +12,9 @@ export default function Overview() {
     async function fetchOverview() {
       try {
         // Replace these URLs with your actual backend API endpoints
-        const holdingsRes = await fetch("http://localhost:5000/api/holdings");
-        const positionsRes = await fetch("http://localhost:5000/api/positions");
-        const ordersRes = await fetch("http://localhost:5000/api/orders");
+        const holdingsRes = await fetch("https://growpaisa.onrender.com/api/holdings");
+        const positionsRes = await fetch("https://growpaisa.onrender.com/api/positions");
+        const ordersRes = await fetch("https://growpaisa.onrender.com/api/orders");
 
         const holdings = await holdingsRes.json();
         const positions = await positionsRes.json();

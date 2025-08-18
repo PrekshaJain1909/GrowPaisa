@@ -10,10 +10,10 @@ export default function FundsDashboard() {
 
   // API URLs without portfolioHoldings
   const apiEndpoints = {
-    bids: "http://localhost:5000/api/bids",
-    holdings: "http://localhost:5000/api/holdings",
-    orders: "http://localhost:5000/api/orders",
-    positions: "http://localhost:5000/api/positions",
+    bids: "https://growpaisa.onrender.com/api/bids",
+    holdings: "https://growpaisa.onrender.com/api/holdings",
+    orders: "https://growpaisa.onrender.com/api/orders",
+    positions: "https://growpaisa.onrender.com/api/positions",
   };
 
   useEffect(() => {

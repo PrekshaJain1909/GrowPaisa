@@ -6,7 +6,7 @@ export default function Bids() {
 
   // Fetch bids from backend API
   useEffect(() => {
-    fetch("http://localhost:5000/api/bids")
+    fetch("https://growpaisa.onrender.com/api/bids")
       .then((res) => res.json())
       .then((data) => setBids(data))
       .catch((err) => console.error("Failed to fetch bids", err));
