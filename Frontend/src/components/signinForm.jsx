@@ -33,14 +33,14 @@ const SignInForm = ({ onClose }) => {
       setErrors(errs);
     } else {
       try {
-        const res = await axios.post("http://localhost:5000/api/auth/signin", formData);
+        const res = await axios.post("https://growpaisa.onrender.com/api/auth/signin", formData);
         console.log("Submitting data to backend:", {
   email: formData.email,
   password: formData.password,
 });
 
         if (res.data.success) {
-  window.location.href = "http://localhost:5174"; // Or the deployed dashboard link
+  window.location.href = "https://growpaisa.onrender.com"; // Or the deployed dashboard link
 
 
         } else {
