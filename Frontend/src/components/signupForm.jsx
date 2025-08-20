@@ -95,9 +95,7 @@ const SignupForm = ({ onClose }) => {
       className="signup-form-section"
     >
       <div className="signup-form-container">
-        <button className="close-button" onClick={onClose}>
-          &times;
-        </button>
+        
         <h2 className="signup-title">Create Your GrowPaisa Account</h2>
         <form onSubmit={handleSubmit}>
           <label>Full Name</label>

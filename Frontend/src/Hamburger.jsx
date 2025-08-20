@@ -94,13 +94,7 @@ const HamburgerMenu = () => {
           <div className="modal-content p-4" ref={modalRef}>
             <div className="d-flex justify-content-between align-items-center mb-4">
               <h4 className="mb-0 fw-bold text-success">Explore GrowPaisa</h4>
-              <button 
-                className="close-btn" 
-                onClick={() => setIsOpen(false)}
-                aria-label="Close menu"
-              >
-                <FaTimes size={20} />
-              </button>
+              
             </div>
 
             {/* Products */}

@@ -56,9 +56,7 @@ const SignInForm = ({ onClose }) => {
   return (
     <section id="signin-form" className="signin-form-section">
       <div className="signin-form-container">
-        <button className="close-button" onClick={onClose}>
-          &times;
-        </button>
+        
         <h2 className="signin-title mt-5 pt-3">Welcome Back to GrowPaisa</h2>
         <form onSubmit={handleSubmit}>
           <label>Email</label>
