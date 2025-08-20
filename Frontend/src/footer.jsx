@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="text-white pt-5 pb-4" style={{ backgroundColor: "#0f3d2e" }}>
-      <div className="container-fluid px-5">
+      <div className="container-fluid px-3 px-md-5">
         <div className="row">
 
           {/* Logo & Socials */}
-          <div className="col-md-3 mb-4">
+          <div className="col-12 col-md-3 mb-4 mb-md-0">
             <img
               src="/images/growpaisaLogo.png"
               alt="GrowPaisa"
@@ -17,15 +17,13 @@ export default function Footer() {
             <p className="mb-1 small">© 2010 - 2025, GrowPaisa Fintech Pvt. Ltd.</p>
             <p className="small text-light">All rights reserved.</p>
 
-            {/* Social Icons (4 + 3) */}
+            {/* Social Icons */}
             <div className="mt-3">
-              <div className="d-flex gap-3 mb-3">
+              <div className="d-flex flex-wrap gap-3 mb-2">
                 <a href="https://x.com/growpaisa" className="text-light"><i className="fab fa-x-twitter"></i></a>
                 <a href="https://facebook.com/growpaisa" className="text-light"><i className="fab fa-facebook"></i></a>
                 <a href="https://instagram.com/growpaisa" className="text-light"><i className="fab fa-instagram"></i></a>
                 <a href="https://linkedin.com/company/growpaisa" className="text-light"><i className="fab fa-linkedin-in"></i></a>
-              </div>
-              <div className="d-flex gap-3">
                 <a href="https://youtube.com/@growpaisa" className="text-light"><i className="fab fa-youtube"></i></a>
                 <a href="https://wa.me/growpaisa" className="text-light"><i className="fab fa-whatsapp"></i></a>
                 <a href="https://t.me/growpaisa" className="text-light"><i className="fab fa-telegram"></i></a>
@@ -34,7 +32,7 @@ export default function Footer() {
           </div>
 
           {/* Company */}
-          <div className="col-md-3 mb-4 ps-5">
+          <div className="col-6 col-md-3 mb-4 mb-md-0 ps-0 ps-md-3">
             <h6 className="text-white fw-bold mb-3">Company</h6>
             <ul className="list-unstyled small">
               <li className="mb-2"><Link to="/about" className="text-light text-decoration-none">About</Link></li>
@@ -49,7 +47,7 @@ export default function Footer() {
           </div>
 
           {/* Support */}
-          <div className="col-md-3 mb-4 ps-5">
+          <div className="col-6 col-md-3 mb-4 mb-md-0 ps-0 ps-md-3">
             <h6 className="text-white fw-bold mb-3">Support</h6>
             <ul className="list-unstyled small">
               <li className="mb-2"><Link to="/support" className="text-light text-decoration-none">Contact Us</Link></li>
@@ -62,7 +60,7 @@ export default function Footer() {
           </div>
 
           {/* Account */}
-          <div className="col-md-3 mb-4 ps-5">
+          <div className="col-12 col-md-3 mb-4 mb-md-0 ps-0 ps-md-3">
             <h6 className="text-white fw-bold mb-3">Account</h6>
             <ul className="list-unstyled small">
               <li className="mb-2"><a href="#" className="text-light text-decoration-none">Open an Account</a></li>
@@ -73,27 +71,27 @@ export default function Footer() {
 
         {/* Legal Section */}
         <div className="pt-4 border-top border-secondary small text-light mt-4">
-          <p>
+          <p className="mb-2">
             GrowPaisa Fintech Pvt. Ltd. is a registered member of NSE, BSE, and MCX.
             Depository participant with CDSL/NSDL. Refer{" "}
             <a href="https://smartodr.in/login" className="text-decoration-none text-white">Smart ODR</a>{" "}
             or{" "}
             <Link to="/support" className="text-decoration-none text-white">raise a ticket</Link>.
           </p>
-          <p>
+          <p className="mb-3">
             Investments in the securities market are subject to market risks. Read all documents before investing.
             GrowPaisa does not offer stock tips or advisory services.
           </p>
 
           {/* Bottom Links */}
-          <div className="d-flex flex-wrap gap-3 mt-3 justify-content-center">
-            <a href="#" className="text-light text-decoration-none">NSE</a>
-            <a href="#" className="text-light text-decoration-none">BSE</a>
-            <a href="#" className="text-light text-decoration-none">MCX</a>
-            <a href="#" className="text-light text-decoration-none">Terms & Conditions</a>
-            <a href="#" className="text-light text-decoration-none">Privacy Policy</a>
-            <a href="#" className="text-light text-decoration-none">Disclosure</a>
-            <a href="#" className="text-light text-decoration-none">Investor Charter</a>
+          <div className="d-flex flex-wrap gap-2 gap-md-3 mt-3 justify-content-center">
+            <a href="#" className="text-light text-decoration-none small">NSE</a>
+            <a href="#" className="text-light text-decoration-none small">BSE</a>
+            <a href="#" className="text-light text-decoration-none small">MCX</a>
+            <a href="#" className="text-light text-decoration-none small">Terms & Conditions</a>
+            <a href="#" className="text-light text-decoration-none small">Privacy Policy</a>
+            <a href="#" className="text-light text-decoration-none small">Disclosure</a>
+            <a href="#" className="text-light text-decoration-none small">Investor Charter</a>
           </div>
         </div>
       </div>

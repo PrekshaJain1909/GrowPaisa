@@ -63,7 +63,7 @@ const pricingData = {
 
 const PricingTable = ({ data }) => (
   <div className="table-responsive">
-    <table className="table table-bordered align-middle shadow-sm">
+    <table className="table table-bordered align-middle shadow-sm table-striped table-sm">
       <thead className="table-success text-dark">
         <tr>
           <th></th>
@@ -77,7 +77,7 @@ const PricingTable = ({ data }) => (
           <tr key={i}>
             <td className="fw-semibold text-muted">{row[0]}</td>
             {row.slice(1).map((cell, j) => (
-              <td key={j} className="text-muted small">{cell}</td>
+              <td key={j} className="text-muted small text-break">{cell}</td>
             ))}
           </tr>
         ))}
@@ -106,15 +106,15 @@ const GrowPaisaChargesPage = () => {
         <div className="row justify-content-center mb-5 px-3">
           {features.map((item, index) => (
             <div
-              className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+              className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex mb-4"
               key={index}
             >
-              <div className="w-100 p-4 shadow-sm rounded bg-white text-center">
+              <div className="w-100 p-4 shadow-sm rounded bg-white text-center h-100">
                 <img
                   src={item.logo}
                   alt={item.heading}
-                  style={{ height: "150px", width: "auto" }}
-                  className="mb-3"
+                  className="img-fluid mb-3"
+                  style={{ maxHeight: "120px" }}
                 />
                 <h5 className="text-dark fw-semibold mb-2">{item.heading}</h5>
                 <p className="text-muted small">{item.writeup}</p>
@@ -124,11 +124,11 @@ const GrowPaisaChargesPage = () => {
         </div>
 
         {/* Tabs */}
-        <ul className="nav nav-tabs justify-content-center mb-4 border-success">
+        <ul className="nav nav-tabs justify-content-center flex-wrap mb-4 border-success">
           {["equity", "currency", "commodity"].map((tab) => (
             <li className="nav-item" key={tab}>
               <button
-                className={`nav-link px-4 ${activeTab === tab ? "active fw-bold text-success" : "text-muted"}`}
+                className={`nav-link px-4 mb-2 ${activeTab === tab ? "active fw-bold text-success" : "text-muted"}`}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -152,7 +152,7 @@ const GrowPaisaChargesPage = () => {
         <div className="my-5">
           <h2 className="fw-bold text-success mb-3">Account Opening Charges</h2>
           <div className="table-responsive">
-            <table className="table table-bordered align-middle shadow-sm">
+            <table className="table table-bordered align-middle shadow-sm table-sm table-striped">
               <thead className="table-success text-dark">
                 <tr>
                   <th>Type of Account</th>
@@ -185,7 +185,7 @@ const GrowPaisaChargesPage = () => {
         <div className="my-5">
           <h2 className="fw-bold text-success mb-3">Optional Value-Added Services</h2>
           <div className="table-responsive">
-            <table className="table table-bordered align-middle shadow-sm">
+            <table className="table table-bordered align-middle shadow-sm table-sm table-striped">
               <thead className="table-success text-dark">
                 <tr>
                   <th>Service</th>
@@ -216,7 +216,7 @@ const GrowPaisaChargesPage = () => {
 
         {/* Additional Charges */}
         <div className="row text-muted small">
-          <div className="col-md-6">
+          <div className="col-md-6 mb-4">
             <h5 className="text-dark fw-bold mb-3">Charges Explained</h5>
             <p><strong>STT/CTT:</strong> Government tax applicable on transactions.</p>
             <p><strong>Transaction Charges:</strong> Levied by exchanges.</p>
@@ -227,7 +227,7 @@ const GrowPaisaChargesPage = () => {
             <p><strong>IPFT Charges:</strong> ₹10/crore for equity, ₹50/crore for options.</p>
             <p><strong>MTF Charges:</strong> 0.04%/day interest, ₹30 pledge fee.</p>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-4">
             <h5 className="text-dark fw-bold mb-3">Other Fees</h5>
             <p><strong>GST:</strong> 18% on all brokerage, SEBI, and exchange fees.</p>
             <p><strong>SEBI:</strong> ₹10/crore for market regulation.</p>

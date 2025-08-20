@@ -1,3 +1,5 @@
+/* HamburgerMenu.css */
+
 /* Modal overlay */
 .modal-overlay {
   position: fixed;
@@ -38,6 +40,13 @@
   border: none;
   cursor: pointer;
   color: #0f3d2e;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  color: #1a5c41;
+  transform: scale(1.05);
 }
 
 /* Close button */
@@ -50,6 +59,12 @@
   font-size: 1.5rem;
   cursor: pointer;
   color: #333;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #0f3d2e;
+  transform: rotate(90deg);
 }
 
 /* Explore Products Title */
@@ -61,17 +76,46 @@
 }
 
 /* Product items */
-.product-item img {
-  height: 40px;
-  object-fit: contain;
-  margin-bottom: 8px;
+.product-item {
+  padding: 1rem 0.5rem;
+  transition: all 0.3s ease;
+  border-radius: 8px;
 }
+
+.product-item:hover {
+  background-color: rgba(15, 61, 46, 0.05);
+  transform: translateY(-2px);
+}
+
+.icon-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(15, 61, 46, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.icon-wrapper-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(15, 61, 46, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .product-item h6 {
   font-size: 15px;
   font-weight: 600;
   color: #222;
   margin-bottom: 4px;
+  margin-top: 10px;
 }
+
 .product-item p {
   font-size: 13px;
   color: #888;
@@ -86,4 +130,57 @@
   margin-bottom: 1rem;
 }
 
-/* Li*
+/* List items */
+.modal-content li {
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.modal-content li:hover {
+  color: #0f3d2e;
+  transform: translateX(5px);
+}
+
+/* Education items */
+.education-item {
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.education-item:hover {
+  background-color: rgba(15, 61, 46, 0.05);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 85%;
+    margin-right: 10px;
+    padding: 1.5rem;
+  }
+  
+  .product-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .product-item h6 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-content {
+    width: 90%;
+    margin-right: 5px;
+    padding: 1rem;
+  }
+  
+  .modal-content h4 {
+    font-size: 18px;
+  }
+  
+  .education-item span {
+    font-size: 14px;
+  }
+}
