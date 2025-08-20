@@ -28,7 +28,7 @@ GrowPaisa is a full-stack web application designed to help users track stocks, m
 
 ## 📸 Screenshots
 
-> _Coming soon – Add screenshots or a demo video link here._
+![Project Screenshot](./frontend/public/images/homeHero.png)
 
 ---
 
